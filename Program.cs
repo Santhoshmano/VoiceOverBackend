@@ -26,6 +26,10 @@ namespace VoiceOver
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
+                    webBuilder.ConfigureKestrel((context, serverOptions) =>
+                    {
+                        serverOptions.ListenAnyIP(5000);
+                    });
                 });
     }
 }
