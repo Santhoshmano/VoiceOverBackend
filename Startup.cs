@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.WebSockets;
 using System.Threading.Tasks;
+using VoiceOver.Utils;
 
 namespace VoiceOver
 {
@@ -39,6 +40,9 @@ namespace VoiceOver
                                                           
                                   });
             });
+
+            //services.AddScoped<IS3UploadUtil, S3UploadUtil>();
+            services.Add(new ServiceDescriptor(typeof(IS3UploadUtil), new S3UploadUtil()));
 
             services.Configure<FormOptions>(o => {
                 o.ValueLengthLimit = int.MaxValue;
