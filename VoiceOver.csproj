@@ -16,7 +16,15 @@
 
   <ItemGroup>
     <Folder Include="Resources\Voices\" />
+    <Folder Include="Utils\" />
+    <Folder Include="Utils\Transcribe\" />
+    <Folder Include="Utils\S3Upload\" />
   </ItemGroup>
 
 
+  <ItemGroup>
+    <None Remove="Utls\" />
+    <None Remove="Utils\Transcribe\" />
+    <None Remove="Utils\S3Upload\" />
+  </ItemGroup>
 </Project>

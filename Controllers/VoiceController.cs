@@ -5,13 +5,25 @@ using System.IO;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using VoiceOver.Utils;
+using VoiceOver.Utils.Transcribe;
 
 namespace VoiceOver.Controllers
 {
     public class VoiceController : Controller
     {
+        private readonly S3UploadUtil s3UploadUtil;
+
+        private readonly ITranscribe transcribe;
+        public VoiceController()
+        {
+            this.s3UploadUtil = new S3UploadUtil();
+            this.transcribe = new Transcribe();
+        }
+        
+
         [HttpPost("/voice"), DisableRequestSizeLimit]
-        public IActionResult Voice()
+        public async Task<IActionResult> Voice()
         {
             
             var file = Request.Form.Files[0];
@@ -30,8 +42,10 @@ namespace VoiceOver.Controllers
                 using (var stream = new FileStream(fullPath, FileMode.Create))
                 {
                     file.CopyTo(stream);
+                    await s3UploadUtil.uploadToS3(fullPath);
+                    var res = await transcribe.startTranscription(fileName);
+                    return Ok(res);
                 }
-                return Ok();
             }
             else
             {
