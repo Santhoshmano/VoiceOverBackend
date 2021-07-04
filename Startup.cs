@@ -64,7 +64,7 @@ namespace VoiceOver
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseRouting();
             app.UseCors(MyAllowSpecificOrigins);
